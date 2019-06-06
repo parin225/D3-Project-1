@@ -64,7 +64,7 @@ d3.csv("assets/data/data.csv", function(err, data){
     // Initialize Tooltip
     var toolTip = d3.tip()
         .attr("class", "tooltip")
-        .offset ([80, -80])
+        .offset ([90, -180])
         .html(function(d){
             return (`<strong> State: ${d.state}<strong><hr> Smokers: ${d.smokes}`);
         });
@@ -79,24 +79,20 @@ d3.csv("assets/data/data.csv", function(err, data){
         .append("circle")
         .attr("cx", d => xTimeScale(d.age))
         .attr("cy", d => yLinearScale(d.smokes))
-        .attr("r", "10")
+        .attr("r", "15")
         .attr("fill", "lightblue")
         .attr("stroke-width", "1")
         .attr("stroke", "black");
 
-    // append text to circles
-    // var textGroup = chartGroup.selectAll("stateText")
-    //     .data(data)
-    //     .enter()
-    //     .append("stateText")
-    //     .attr("x", d => xTimeScale(d.age))
-    //     // .attr("y”, d => yLinearScale(d.smokes))
-    //     .text(d => d.abbr)
-    //     // .classed("stateText”, true);
-
-    // chartGroup.append("text")
-    //     .attr("dx", function(d){return -20})
-    //     .text(function(d){return d.abbr})
+    // Append text to the circles 
+    var textGroup = chartGroup.selectAll(".stateText")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", d => xTimeScale(d.age))
+        .attr("y", d => yLinearScale(d.smokes))
+        .text(d => d["abbr"])
+        .classed("stateText",true);
 
     // Mouseover Event
     circlesGroup.on("mouseover", function(d) {
